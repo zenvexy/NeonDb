@@ -1,0 +1,11 @@
+{
+  "remoteName": "origin",
+  "projects": [
+    {
+      "id": "prj_7NCXjaiELAQrC5qFdBWpsmuTFxTd",
+      "name": "neon-db",
+      "directory": "api",
+      "orgId": "team_tjtbrRE6w95BeXHHYEXpXchc"
+    }
+  ]
+}

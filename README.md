@@ -1,144 +1,206 @@
-# RestaurantPlus - Backend
+# Esfiha Prime — Backend
 
-Sistema de gerenciamento de restaurante. O repositório contém uma interface
-web simples e uma API REST em Express, com Prisma e PostgreSQL.
+API REST do Esfiha Prime, desenvolvida com Express, Prisma e PostgreSQL hospedado no [Neon DB](https://neon.com).
 
-## Complementar
+**API em produção:** [https://neon-db.vercel.app](https://neon-db.vercel.app)
 
-Este readme é um complemento ao readme do [Frontend](./web/README.md).
+## Tecnologias
+
+- Node.js
+- Express
+- Prisma ORM
+- PostgreSQL (Neon)
+- Vercel
 
 ## Estrutura
 
-- `web/`: interface web.
-- `api/`: API, schema Prisma, seed e migrations.
-- `docs/insomnia.yaml`: coleção Insomnia; importe o arquivo e use a pasta
-  **RestaurantPlus**.
+```text
+api/
+├── prisma/
+│   ├── migrations/       # Histórico das alterações do banco
+│   ├── schema.prisma     # Modelos Prisma
+│   └── seed.js           # Dados iniciais de desenvolvimento
+├── src/
+│   ├── controllers/
+│   ├── data/
+│   ├── enums/
+│   └── routes/
+├── index.js              # Configuração do Express e rotas
+└── server.js             # Inicialização local do servidor
+```
 
-## API local
+## Modelos
 
-O backend usa PostgreSQL. O MySQL do XAMPP não é compatível com a configuração
-atual do schema e do adapter Prisma.
+### Categoria
 
-Requisitos: Node.js, npm e um banco PostgreSQL acessível.
+| Campo | Tipo | Regra |
+| --- | --- | --- |
+| `id` | inteiro | Gerado automaticamente |
+| `nome` | texto | Único |
 
-No CMD, a partir da raiz do repositório:
+### Esfiha
+
+| Campo | Tipo | Regra |
+| --- | --- | --- |
+| `id` | inteiro | Gerado automaticamente |
+| `nome` | texto | Obrigatório |
+| `preco` | número | Obrigatório |
+| `disponivel` | enum | `DISPONIVEL` ou `INDISPONIVEL` |
+| `categoriaId` | inteiro | ID de uma categoria existente |
+
+## Configuração local
+
+### 1. Instale as dependências
+
+No terminal, na raiz do projeto:
 
 ```bat
 cd api
 npm install
 ```
 
-Configure `api/.env` com `DATABASE_URL` para um banco PostgreSQL de
-desenvolvimento e, opcionalmente, a porta:
+### 2. Configure o Neon
+
+Crie o arquivo `api/.env` e adicione a URL de conexão fornecida pelo Neon:
 
 ```env
 PORT=3000
-DATABASE_URL="postgresql://user:senha@host/neondb?sslmode=require"
+DATABASE_URL="postgresql://USUARIO:SENHA@HOST/neondb?sslmode=require"
 ```
 
-Se estiver usando o Prisma Postgres da Vercel localmente, vincule o projeto e
-puxe as variáveis do ambiente **Development**:
+Não envie o arquivo `.env` para o GitHub.
+
+### 3. Crie as tabelas no banco
+
+Com uma migration já versionada no projeto, aplique-a no Neon:
 
 ```bat
-npx vercel login
-npx vercel link
-npx vercel env pull .env
-```
-
-Confirme no painel da Vercel que `DATABASE_URL` está configurada para
-**Development**. Não use a URL de produção para `migrate dev` e não envie o
-`.env` ao Git.
-
-Valide o schema, gere o Prisma Client e inicie a API:
-
-```bat
-npx prisma validate
 npx prisma generate
-npm run dev
+npx prisma migrate deploy
 ```
 
-A API ficará em `http://localhost:3000`. Para iniciar sem modo de observação,
-use `npm start`.
-
-## Banco e migrations
-
-O schema ativo usa PostgreSQL e está em `api/prisma/schema.prisma`. A migration
-inicial está em `api/prisma/migrations/`.
-
-Para alterações futuras, com um banco de desenvolvimento acessível:
+Para criar uma migration após modificar o `schema.prisma`, use:
 
 ```bat
-npx prisma migrate dev --name NOME_DA_MUDANCA
+npx prisma migrate dev --name nome_da_alteracao
 ```
 
-Faça commit do schema e da pasta `api/prisma/migrations` e envie para o GitHub.
-O build da Vercel executa `prisma migrate deploy` por meio de `npm run build` e
-aplica as migrations pendentes no banco configurado em `DATABASE_URL`.
+Depois, envie a nova pasta criada em `api/prisma/migrations/` para o GitHub.
 
-### Deploy na Vercel
-
-1. Configure o **Root Directory** do projeto como `api` e selecione o preset
-   **Express**.
-2. Adicione a integração Prisma Postgres e confirme que `DATABASE_URL` está
-   configurada para os ambientes de deploy.
-3. Use `npm run build` como Build Command. O comando aplica as migrations
-   versionadas; o `postinstall` gera o Prisma Client.
-4. Envie o commit com as migrations ao GitHub para iniciar o deploy.
-
-Se for necessário criar uma migration inicial **offline**, sem conexão com o
-banco, use o CMD dentro de `api`:
-
-```bat
-for /f %i in ('powershell -NoProfile -Command "Get-Date -Format yyyyMMddHHmmss"') do set "STAMP=%i"
-mkdir prisma\migrations\%STAMP%_init
-npx prisma migrate diff --from-empty --to-schema prisma\schema.prisma --script --output prisma\migrations\%STAMP%_init\migration.sql
-```
-
-Esse comando gera o SQL, mas não o aplica. A pasta
-`prisma/migrations/migration_lock.toml` também deve existir com
-`provider = "postgresql"`. `--from-empty` é somente para a migration inicial de
-um banco vazio; não gere outra migration inicial se a pasta já existir nem
-aplique-a sobre tabelas existentes sem preparar um baseline.
-
-`npx prisma db push` sincroniza o schema diretamente, mas não cria histórico de
-migrations. Para produção na Vercel, use migrations versionadas e
-`prisma migrate deploy`.
-
-## Seed de desenvolvimento
-
-O seed cadastra exemplos para categorias, ingredientes, mesas, pratos e
-pedidos:
+### 4. Dados de desenvolvimento (opcional)
 
 ```bat
 npx prisma db seed
 ```
 
-**Atenção:** o seed apaga os registros dessas tabelas antes de recriar os
-exemplos. Use somente em banco de desenvolvimento.
+> Atenção: o seed remove todas as esfihas e categorias antes de cadastrar os exemplos. Use-o somente em banco de desenvolvimento.
+
+### 5. Inicie a API
+
+```bat
+npm run dev
+```
+
+A API ficará disponível em `http://localhost:3000`.
+
+## API em produção
+
+A API publicada na Vercel está disponível em:
+
+```text
+https://neon-db.vercel.app
+```
+
+Exemplos:
+
+```text
+https://neon-db.vercel.app/
+https://neon-db.vercel.app/esfihas/listar
+https://neon-db.vercel.app/categorias/listar
+```
 
 ## Rotas
 
-Cada recurso abaixo tem `GET /listar`, `POST /cadastrar`,
-`PUT /atualizar/:id` e `DELETE /excluir/:id`:
+| Método | Rota | Descrição |
+| --- | --- | --- |
+| GET | `/` | Status e lista de rotas |
+| GET | `/categorias/listar` | Lista categorias e suas esfihas |
+| POST | `/categorias/cadastrar` | Cadastra uma categoria |
+| PUT | `/categorias/atualizar/:id` | Atualiza uma categoria |
+| DELETE | `/categorias/excluir/:id` | Exclui uma categoria sem esfihas vinculadas |
+| GET | `/esfihas/listar` | Lista esfihas e suas categorias |
+| POST | `/esfihas/cadastrar` | Cadastra uma esfiha |
+| PUT | `/esfihas/atualizar/:id` | Atualiza uma esfiha |
+| DELETE | `/esfihas/excluir/:id` | Exclui uma esfiha |
+| GET | `/enums/disponibilidade` | Lista valores de disponibilidade expostos pela API |
 
-- `/categorias`
-- `/ingredientes`
-- `/pratos`
-- `/pedidos`
-- `/mesas`
+### Exemplos de payload
 
-Rotas de enums:
+Criar categoria:
 
-- `GET /enums/categorias`
-- `GET /enums/disponibilidade`
-- `GET /enums/ocupacao`
-- `GET /enums/status-pedido`
+```json
+{
+  "nome": "Tradicionais"
+}
+```
 
-`GET /` retorna o status da API e a lista de rotas. Um cadastro ou atualização
-com uma categoria já existente retorna `409`.
+Criar esfiha:
 
-As listagens incluem as relações do schema. Para cadastrar um prato, envie
-`categoria` e `ingredientes` no formato de relações do Prisma, usando `connect`
-com IDs existentes. Para cadastrar um pedido, associe a mesa com `mesa.connect`.
+```json
+{
+  "nome": "Carne",
+  "preco": 8.5,
+  "disponivel": "DISPONIVEL",
+  "categoriaId": 1
+}
+```
 
-Os valores de `Categorias.categoria` e `Mesas.numero` são únicos.
+O cadastro e a atualização de categorias retornam `409` quando o nome já existe, inclusive com diferenças de maiúsculas, acentos ou espaços extras.
+
+## Insomnia
+
+Importe a coleção [Insomnia_2026-11-23-09-09-21.yaml](./docs/Insomnia_2026-11-23-09-09-21.yaml) no Insomnia. Ajuste as variáveis `categoria_id` e `esfiha_id` conforme os IDs do seu banco.
+
+## Deploy na Vercel
+
+1. Envie o projeto, incluindo `api/prisma/migrations/`, para o GitHub.
+2. Na Vercel, importe o repositório e configure **Root Directory** como `api`.
+3. No terminal, dentro de `api`, vincule e publique o projeto:
+
+```bat
+npx vercel login
+npx vercel link
+npx vercel env add DATABASE_URL --environment production
+npx vercel env add DATABASE_URL --environment preview
+npx vercel --prod
+```
+
+Ao executar os comandos `vercel env add`, cole somente a URL do Neon quando o terminal solicitar o valor — sem aspas e sem `DATABASE_URL=`.
+
+O script de build executa `prisma migrate deploy`; por isso, a Vercel aplica migrations pendentes no Neon durante o deploy. Não execute `npx prisma db seed` em produção.
+
+## Tutorial do Neon
+
+### 1. Crie um projeto
+
+No painel do Neon, crie um projeto PostgreSQL para a API.
+
+![Lista de projetos do Neon](./Assets/screenshots/screensht1.png)
+
+### 2. Defina o projeto e a região
+
+Informe o nome do projeto, escolha a região e mantenha o serviço **Postgres database** ativo.
+
+![Criação de projeto no Neon](./Assets/screenshots/screenshot2.png)
+
+### 3. Abra a branch de produção
+
+Após criar o projeto, acesse a branch padrão para visualizar os recursos do banco.
+
+![Visão geral da branch no Neon](./Assets/screenshots/screenshot3.png)
+
+### 4. Copie a URL de conexão
+
+Clique em **Connect**, selecione o formato Node.js e copie somente o valor da `DATABASE_URL`. Use-o no arquivo `.env` local e como variável secreta na Vercel.
+
+![Janela de conexão do Neon](./Assets/screenshots/screenshot4.png)
