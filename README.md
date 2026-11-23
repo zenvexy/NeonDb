@@ -1,5 +1,5 @@
 # Esfiha Prime — Backend
-
+ 
 API REST do Esfiha Prime, desenvolvida com Express, Prisma e PostgreSQL hospedado no [Neon DB](https://neon.com).
 
 > Este backend complementa o [frontend do Esfiha Prime](web/README.md). A API fornece categorias e esfihas; a interface web consome essas rotas para gerenciar o cardápio.
