@@ -1,0 +1,310 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: My API Collection
+meta:
+  id: wrk_78de0ed224664bd881a6d2120cdd21c7
+  created: 1795039391854
+  modified: 1795039391854
+  description: ""
+collection:
+  - name: Loja Salgados
+    meta:
+      id: fld_33512228efed414e91f0c15625576d9d
+      created: 1795039404383
+      modified: 1795039404383
+      sortKey: -1795039404383
+      description: ""
+    children:
+      - name: Produtos
+        meta:
+          id: fld_da389a17a48347018fa5ef2ab3ccae3f
+          created: 1795039415295
+          modified: 1795039421188
+          sortKey: -1795039415295
+          description: ""
+      - name: Pedidos
+        meta:
+          id: fld_9cd1e67b9f484c46892afe90fdaa9322
+          created: 1795039435292
+          modified: 1795039435292
+          sortKey: -1795039435292
+          description: ""
+  - name: Média Final
+    meta:
+      id: fld_e1a7fc31e67d411aafd9dd6e509b3ff5
+      created: 1795280748515
+      modified: 1795280751159
+      sortKey: -1795039404483
+      description: ""
+    children:
+      - name: Professores
+        meta:
+          id: fld_2fe521aa77b94163af767cfab0bbf846
+          created: 1795280748515
+          modified: 1795280793388
+          sortKey: -1795039435292
+          description: ""
+      - name: Notas
+        meta:
+          id: fld_f23c2979e7254a518c031154d5e48e42
+          created: 1795280748515
+          modified: 1795286298329
+          sortKey: -1795039415295
+          description: ""
+      - name: Alunos
+        meta:
+          id: fld_4bb58bdf4bdc4c698b6d0af58b8a22ce
+          created: 1795280757944
+          modified: 1795286084163
+          sortKey: -1795039425293.5
+          description: ""
+      - name: Matérias
+        meta:
+          id: fld_48c05f7127494d53a31857fe96f5ddc8
+          created: 1795280765966
+          modified: 1795280765966
+          sortKey: -1795039430292.75
+          description: ""
+  - name: Esfiha Prime
+    meta:
+      id: fld_99b0f2f0c1e8499ead2723816874843f
+      created: 1795455950381
+      modified: 1795455950381
+      sortKey: -1795455950381
+      description: ""
+    children:
+      - name: Esfihas
+        meta:
+          id: fld_40111810beea4283acc4a6c5568c16ee
+          created: 1795440000000
+          modified: 1795455956929
+          sortKey: -1795455953960
+          description: Rotas da entidade Esfiha.
+        children:
+          - url: http://localhost:3000/esfihas/atualizar/
+            name: Atualizar
+            meta:
+              id: req_2bd451aaf1cd4412b70c7b0e01eea070
+              created: 1795440000000
+              modified: 1795456521848
+              isPrivate: false
+              description: Ajuste esfiha_id no ambiente para o ID desejado.
+              sortKey: -3
+            method: PUT
+            body:
+              mimeType: application/json
+              text: ""
+            headers:
+              - name: Content-Type
+                value: application/json
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:3000/esfihas/listar
+            name: Listar
+            meta:
+              id: req_78628220c68a48b0a41a8f144968d461
+              created: 1795440000000
+              modified: 1795456487470
+              isPrivate: false
+              description: Retorna esfihas com suas categorias.
+              sortKey: -1
+            method: GET
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:3000/esfihas/cadastrar
+            name: Cadastrar
+            meta:
+              id: req_7998205541d04f8982ee534ed4c1bc03
+              created: 1795440000000
+              modified: 1795456504704
+              isPrivate: false
+              description: categoria_id deve corresponder a uma categoria existente.
+              sortKey: -2
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                  "nome": "Carne",
+                  "preco": 8.5,
+                  "disponivel": "DISPONIVEL",
+                  "categoriaId": 2
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:3000/esfihas/excluir/4
+            name: Excluir
+            meta:
+              id: req_f63383ac42054e359a8a4ecadc591620
+              created: 1795440000000
+              modified: 1795456530919
+              isPrivate: false
+              description: Ajuste esfiha_id no ambiente para o ID desejado.
+              sortKey: -4
+            method: DELETE
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - name: Enums
+            meta:
+              id: fld_9db6b595692b444398f4f0c19d6e8c54
+              created: 1795440000000
+              modified: 1795455960660
+              sortKey: 99
+              description: Valores disponibilizados pela API.
+            children:
+              - url: http://localhost:3000/enums/disponibilidade
+                name: Disponibilidade
+                meta:
+                  id: req_49c2af53852e4387a101c89aa79df5f3
+                  created: 1795440000000
+                  modified: 1795456457974
+                  isPrivate: false
+                  description: Lista as opções de disponibilidade expostas pela API.
+                  sortKey: -1
+                method: GET
+                settings:
+                  renderRequestBody: true
+                  encodeUrl: true
+                  followRedirects: global
+                  cookies:
+                    send: true
+                    store: true
+                  rebuildPath: true
+      - name: Categorias
+        meta:
+          id: fld_49f703292c7b402dbd2d3f7963245f5b
+          created: 1795440000000
+          modified: 1795455954208
+          sortKey: -1795455954060
+          description: Cadastre uma categoria antes de cadastrar uma esfiha.
+        children:
+          - url: http://localhost:3000/categorias/listar
+            name: Listar
+            meta:
+              id: req_101790372911474fa5558a810653b514
+              created: 1795440000000
+              modified: 1795456870540
+              isPrivate: false
+              description: Retorna categorias com suas esfihas.
+              sortKey: -1
+            method: GET
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:3000/categorias/excluir/5
+            name: Excluir
+            meta:
+              id: req_5fa139bf2d1e4b14b6ce1b7d676b5f44
+              created: 1795440000000
+              modified: 1795456878933
+              isPrivate: false
+              description: A categoria não pode possuir esfihas vinculadas.
+              sortKey: -4
+            method: DELETE
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:3000/categorias/atualizar/
+            name: Atualizar
+            meta:
+              id: req_ab751e3e968b45769a7ed1d701f2c76d
+              created: 1795440000000
+              modified: 1795456072880
+              isPrivate: false
+              description: Ajuste categoria_id no ambiente para o ID desejado.
+              sortKey: -3
+            method: PUT
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                  "nome": "Especiais"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:3000/categorias/cadastrar
+            name: Cadastrar
+            meta:
+              id: req_ebee749c30ea4bec8e97d10b39fcbe27
+              created: 1795440000000
+              modified: 1795456846525
+              isPrivate: false
+              description: Cria uma categoria.
+              sortKey: -2
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                  "nome": "Tradicioais"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_82e039d275a1a73bf5cddb3f497f209f976bccfe
+    created: 1795039391860
+    modified: 1795039391860
+environments:
+  name: Base Environment
+  meta:
+    id: env_82e039d275a1a73bf5cddb3f497f209f976bccfe
+    created: 1795039391858
+    modified: 1795039391858
+    isPrivate: false
