@@ -1,0 +1,194 @@
+:root {
+  font-family: Arial, sans-serif;
+  color: #2f211c;
+  background: #fff7ed;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 24px;
+  line-height: 1.5;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  color: white;
+  background: #7c2d12;
+  border-radius: 10px;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+nav {
+  display: flex;
+  gap: 10px;
+}
+
+nav a,
+button {
+  padding: 10px 14px;
+  border: 1px solid #9a3412;
+  border-radius: 5px;
+  color: #7c2d12;
+  background: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+nav a.active,
+button[type="submit"] {
+  color: white;
+  background: #c2410c;
+}
+
+button.perigo {
+  color: white;
+  background: #b91c1c;
+  border-color: #b91c1c;
+}
+
+td button {
+  margin-right: 6px;
+}
+
+main {
+  margin-top: 32px;
+}
+
+form,
+.painel {
+  padding: 20px;
+  margin-bottom: 24px;
+  background: white;
+  border: 1px solid #fed7aa;
+  border-radius: 8px;
+}
+
+form {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) auto auto;
+  gap: 14px;
+  align-items: end;
+}
+
+form h3 {
+  grid-column: 1 / -1;
+}
+
+label {
+  display: grid;
+  gap: 5px;
+  font-weight: bold;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #c4a68e;
+  border-radius: 5px;
+  font: inherit;
+}
+
+.busca {
+  max-width: 320px;
+  margin-bottom: 14px;
+}
+
+.resumo,
+#mensagem {
+  min-height: 24px;
+  margin: 0 0 14px;
+}
+
+.sucesso {
+  color: #166534;
+}
+
+.erro {
+  color: #b91c1c;
+}
+
+.tabela {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+th,
+td {
+  padding: 12px;
+  border: 1px solid #fed7aa;
+  text-align: left;
+}
+
+.atalhos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.atalho {
+  padding: 20px;
+  color: #7c2d12;
+  background: white;
+  border: 1px solid #fed7aa;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.atalho:hover {
+  background: #ffedd5;
+}
+
+footer {
+  margin-top: 28px;
+  text-align: center;
+  color: #7c2d12;
+}
+
+@media (max-width: 700px) {
+  body {
+    padding: 14px;
+  }
+
+  header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  form,
+  .atalhos {
+    grid-template-columns: 1fr;
+  }
+
+  table {
+    font-size: 14px;
+  }
+
+  th,
+  td {
+    padding: 8px;
+  }
+}

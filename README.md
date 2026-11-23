@@ -2,6 +2,8 @@
 
 API REST do Esfiha Prime, desenvolvida com Express, Prisma e PostgreSQL hospedado no [Neon DB](https://neon.com).
 
+> Este backend complementa o [frontend do Esfiha Prime](web/README.md). A API fornece categorias e esfihas; a interface web consome essas rotas para gerenciar o cardápio.
+
 **API em produção:** [https://neon-db.vercel.app](https://neon-db.vercel.app)
 
 ## Tecnologias
@@ -165,19 +167,48 @@ Importe a coleção [Insomnia_2026-11-23-09-09-21.yaml](./docs/Insomnia_2026-11-
 
 1. Envie o projeto, incluindo `api/prisma/migrations/`, para o GitHub.
 2. Na Vercel, importe o repositório e configure **Root Directory** como `api`.
-3. No terminal, dentro de `api`, vincule e publique o projeto:
+3. Escolha uma das opções de banco abaixo e configure `DATABASE_URL` no ambiente **Production** e, se desejar, em **Preview**.
+4. Faça um novo deploy.
+
+### Opção 1: Prisma Postgres pela Vercel
+
+Adicione a integração **Prisma Postgres** ao projeto da Vercel. Ela cria uma `DATABASE_URL` para o banco provisionado pela própria integração. Essa é a opção mais direta quando o banco será gerenciado pela Vercel.
+
+### Opção 2: Neon DB conectado diretamente
+
+No painel do Neon, abra o projeto e a branch que contém os seus dados. Clique em **Connect**, selecione o formato Node.js e copie somente a connection string PostgreSQL.
+
+Na Vercel, abra **Settings → Environment Variables**, remova ou edite a `DATABASE_URL` criada pela integração Prisma Postgres e crie uma nova variável com:
+
+- **Name:** `DATABASE_URL`
+- **Value:** URL copiada do Neon
+- **Environments:** Production e Preview
+- **Sensitive:** ativado
+
+Depois, faça um novo deploy. O front-end continuará chamando a API da Vercel; é a API que passará a consultar o Neon.
+
+> O seed e a API publicada precisam usar a mesma `DATABASE_URL`. Se o seed for executado em um Neon e a Vercel usar outro banco, cada ambiente mostrará dados diferentes.
+
+### Publicar pelo terminal
+
+Dentro de `api/`, vincule e publique o projeto:
 
 ```bat
 npx vercel login
 npx vercel link
-npx vercel env add DATABASE_URL --environment production
-npx vercel env add DATABASE_URL --environment preview
 npx vercel --prod
 ```
 
-Ao executar os comandos `vercel env add`, cole somente a URL do Neon quando o terminal solicitar o valor — sem aspas e sem `DATABASE_URL=`.
+Para cadastrar a URL do Neon pelo terminal, use:
 
-O script de build executa `prisma migrate deploy`; por isso, a Vercel aplica migrations pendentes no Neon durante o deploy. Não execute `npx prisma db seed` em produção.
+```bat
+npx vercel env add DATABASE_URL production
+npx vercel env add DATABASE_URL preview
+```
+
+Quando o terminal solicitar o valor, cole somente a URL do Neon — sem aspas e sem `DATABASE_URL=`.
+
+O script de build executa `prisma migrate deploy`; por isso, a Vercel aplica migrations pendentes no banco configurado pela `DATABASE_URL`. Não execute `npx prisma db seed` em produção.
 
 ## Tutorial do Neon
 
