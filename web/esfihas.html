@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esfihas | Esfiha Prime</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body data-page="esfihas">
+    <header>
+      <h1>Esfiha Prime</h1>
+
+      <nav>
+        <a href="home.html">Início</a>
+        <a href="categorias.html">Categorias</a>
+        <a class="active" href="esfihas.html">Esfihas</a>
+      </nav>
+    </header>
+
+    <main>
+      <h2>Esfihas</h2>
+
+      <form id="formEsfiha">
+        <h3 id="tituloEsfiha">Nova esfiha</h3>
+
+        <label>
+          Sabor
+          <input id="nomeEsfiha" required maxlength="80">
+        </label>
+
+        <label>
+          Preço
+          <input id="precoEsfiha" type="number" min="0.01" step="0.01" required>
+        </label>
+
+        <label>
+          Disponibilidade
+          <select id="disponivel" required>
+            <option value="DISPONIVEL">Disponível</option>
+            <option value="INDISPONIVEL">Indisponível</option>
+          </select>
+        </label>
+
+        <label>
+          Categoria
+          <select id="categoriaId" required>
+            <option value="">Carregando categorias</option>
+          </select>
+        </label>
+
+        <button type="submit">Salvar</button>
+        <button id="cancelarEsfiha" type="button" hidden>Cancelar</button>
+      </form>
+
+      <input id="buscaEsfihas" class="busca" type="search" placeholder="Buscar esfiha ou categoria">
+
+      <p id="resumoEsfihas" class="resumo"></p>
+
+      <div class="tabela">
+        <table>
+          <thead>
+            <tr>
+              <th>Esfiha</th>
+              <th>Categoria</th>
+              <th>Preço</th>
+              <th>Disponibilidade</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="listaEsfihas"></tbody>
+        </table>
+      </div>
+
+      <p id="esfihasVazias" hidden>Nenhuma esfiha encontrada.</p>
+      <p id="mensagem" role="status"></p>
+    </main>
+
+    <footer>Esfiha Prime</footer>
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categorias | Esfiha Prime</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body data-page="categorias">
+    <header>
+      <h1>Esfiha Prime</h1>
+
+      <nav>
+        <a href="home.html">Início</a>
+        <a class="active" href="categorias.html">Categorias</a>
+        <a href="esfihas.html">Esfihas</a>
+      </nav>
+    </header>
+
+    <main>
+      <h2>Categorias</h2>
+
+      <form id="formCategoria">
+        <h3 id="tituloCategoria">Nova categoria</h3>
+
+        <label>
+          Nome
+          <input id="nomeCategoria" required maxlength="80">
+        </label>
+
+        <button type="submit">Salvar</button>
+        <button id="cancelarCategoria" type="button" hidden>Cancelar</button>
+      </form>
+
+      <input id="buscaCategorias" class="busca" type="search" placeholder="Buscar categoria">
+
+      <p id="resumoCategorias" class="resumo"></p>
+
+      <div class="tabela">
+        <table>
+          <thead>
+            <tr>
+              <th>Categoria</th>
+              <th>Esfihas</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="listaCategorias"></tbody>
+        </table>
+      </div>
+
+      <p id="categoriasVazias" hidden>Nenhuma categoria encontrada.</p>
+      <p id="mensagem" role="status"></p>
+    </main>
+
+    <footer>Esfiha Prime</footer>
+    <script src="script.js"></script>
+  </body>
+</html>
